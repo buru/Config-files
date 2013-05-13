@@ -17,6 +17,9 @@ endif
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+filetype on " Enable filetype detection
+filetype indent on " Enable filetype-specific indenting
+filetype plugin on " Enable filetype-specific plugins
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -86,7 +89,7 @@ if has("autocmd")
 
 else
 
-  set autoindent		" always set autoindenting on
+	set autoindent		" always set autoindenting on
 
 endif " has("autocmd")
 
@@ -97,6 +100,14 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 		  \ | wincmd p | diffthis
 endif
+
+" spaces & tabs policy
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+" plugins
+execute pathogen#infect()
 
 " custom commands
 
