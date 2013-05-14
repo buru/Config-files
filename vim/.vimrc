@@ -102,8 +102,8 @@ if !exists(":DiffOrig")
 endif
 
 " spaces & tabs policy
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 
 " plugins
@@ -118,3 +118,6 @@ cmap w!! %!sudo tee > /dev/null %
 "
 " FuzzyFinder
 nmap ff :FufFile **/
+
+" autocommand to autoreload edited vimrc 
+au! BufWritePost _vimrc source %
