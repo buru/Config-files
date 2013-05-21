@@ -104,20 +104,31 @@ endif
 " spaces & tabs policy
 set tabstop=2
 set shiftwidth=2
+set softtabstop=2
 set expandtab
+
+" clipboard
+set clipboard=unnamed
 
 " plugins
 execute pathogen#infect()
 
+" search within files
+nnoremap <C-n> :cnext<CR>
+nnoremap <C-p> :cprev<CR>
+
 " custom commands
 
-" save file with root privileges
-cmap w!! %!sudo tee > /dev/null %
+" syntax-related
+au BufRead,BufNewFile *.rabl setf ruby
 
 " ********************  plugins-related configuration ******************** 
 "
 " FuzzyFinder
 nmap ff :FufFile **/
+
+" save file with root privileges
+cmap w!! %!sudo tee > /dev/null %
 
 " autocommand to autoreload edited vimrc 
 au! BufWritePost _vimrc source %
