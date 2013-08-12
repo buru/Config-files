@@ -112,6 +112,8 @@ execute pathogen#infect()
 nnoremap <C-n> :cnext<CR>
 nnoremap <C-p> :cprev<CR>
 nnoremap <Leader>g :vimgrep /
+" hide search highlighting
+map <Leader>h :set invhls <CR>
 
 " show tab number for easy switching between tabs
 set showtabline=2 " always show tabs in gvim, but not vim
@@ -155,6 +157,14 @@ endfunction
 set guitablabel=%{GuiTabLabel()}
 
 " custom commands
+" launch cucumber test for current line
+function! LaunchCucumberTest()
+  let currentLine = line(".")
+  execute "normal! :!cucumber \%:" . currentLine . "\<CR>"
+endfunction
+nnoremap <Leader>c :call LaunchCucumberTest()<CR>
+
+set shell=/bin/sh " for rvm to work in vim
 
 " syntax-related
 au BufRead,BufNewFile *.rabl setf ruby
