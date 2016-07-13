@@ -30,6 +30,8 @@ set incsearch		" do incremental searching
 
 set number
 
+set noeol
+
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 " let &guioptions = substitute(&guioptions, "t", "", "g")
 
@@ -106,7 +108,27 @@ set clipboard=unnamed
 nnoremap R "_d
 
 " plugins
+" Pathogen
 execute pathogen#infect()
+
+" Vundle
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'JulesWang/css.vim'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'rust-lang/rust.vim'
+
+Plugin 'SirVer/ultisnips'
+Plugin 'isRuslan/vim-es6'
+
+call vundle#end()
+filetype plugin indent on
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 
 " search within files
 nnoremap <C-n> :cnext<CR>
@@ -132,7 +154,7 @@ function! GuiTabLabel()
   endfor
 
   " Append the tab number
-  let label .= v:lnum.': '
+  let label .= v:lnum.':'
 
   " Append the buffer name
   let name = bufname(bufnrlist[tabpagewinnr(v:lnum) - 1])
@@ -151,7 +173,8 @@ function! GuiTabLabel()
 
   " Append the number of windows in the tab page
   let wincount = tabpagewinnr(v:lnum, '$')
-  return label . '  [' . wincount . ']'
+  "return label . '  [' . wincount . ']'
+  return label
 endfunction
 
 set guitablabel=%{GuiTabLabel()}
@@ -173,6 +196,8 @@ au BufRead,BufNewFile *.rabl setf ruby
 "
 " FuzzyFinder
 nmap ff :FufFile **/
+" UtilSnippets
+let g:UltiSnipsExpandTrigger="<tab>"
 
 " save file with root privileges
 cmap w!! %!sudo tee > /dev/null %
