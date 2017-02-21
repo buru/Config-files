@@ -120,6 +120,8 @@ Plugin 'JulesWang/css.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'rust-lang/rust.vim'
 
+Plugin 'tpope/vim-rails' 
+
 Plugin 'SirVer/ultisnips'
 Plugin 'isRuslan/vim-es6'
 
