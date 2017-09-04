@@ -124,6 +124,7 @@ Plugin 'tpope/vim-rails'
 
 Plugin 'SirVer/ultisnips'
 Plugin 'isRuslan/vim-es6'
+Plugin 'maksimr/vim-jsbeautify'
 
 call vundle#end()
 filetype plugin indent on
