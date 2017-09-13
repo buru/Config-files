@@ -116,15 +116,26 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+
 Plugin 'JulesWang/css.vim'
 Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'mustache/vim-mustache-handlebars'
+
 Plugin 'rust-lang/rust.vim'
 
-Plugin 'tpope/vim-rails' 
+Plugin 'tpope/vim-rails'
 
 Plugin 'SirVer/ultisnips'
+
 Plugin 'isRuslan/vim-es6'
 Plugin 'maksimr/vim-jsbeautify'
+Plugin 'kchmck/vim-coffee-script'
+
+Plugin 'flazz/vim-colorschemes'
+Plugin 'nightsense/carbonized'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-fugitive'
 
 call vundle#end()
 filetype plugin indent on
@@ -207,3 +218,16 @@ cmap w!! %!sudo tee > /dev/null %
 
 " autocommand to autoreload edited vimrc 
 au! BufWritePost _vimrc source %
+
+" disable system bell
+:set vb t_vb= 
+
+" UI-related (themes, colors etc)
+colorscheme carbonized-dark
+set guioptions-=m "remove menu bar
+set guioptions-=T "remove toolbar
+let g:airline_powerline_fonts = 1
+if has('gui_running')
+  "set guifont=Source\ Code\ Pro\ for\ Powerline
+  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 10
+endif
