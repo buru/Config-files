@@ -133,9 +133,12 @@ Plugin 'kchmck/vim-coffee-script'
 
 Plugin 'flazz/vim-colorschemes'
 Plugin 'nightsense/carbonized'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+
 Plugin 'tpope/vim-fugitive'
+Plugin 'mileszs/ack.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -148,6 +151,7 @@ filetype plugin indent on
 nnoremap <C-n> :cnext<CR>
 nnoremap <C-p> :cprev<CR>
 nnoremap <Leader>g :vimgrep /
+nnoremap <Leader>f :Ack
 " hide search highlighting
 map <Leader>h :set invhls <CR>
 
@@ -212,6 +216,10 @@ au BufRead,BufNewFile *.rabl setf ruby
 nmap ff :FufFile **/
 " UtilSnippets
 let g:UltiSnipsExpandTrigger="<tab>"
+" Ack/Ag
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 " save file with root privileges
 cmap w!! %!sudo tee > /dev/null %
@@ -223,7 +231,11 @@ au! BufWritePost _vimrc source %
 :set vb t_vb= 
 
 " UI-related (themes, colors etc)
-colorscheme carbonized-dark
+if has('gui_running')
+  colorscheme carbonized-dark
+else
+  colorscheme Monokai
+endif
 set guioptions-=m "remove menu bar
 set guioptions-=T "remove toolbar
 let g:airline_powerline_fonts = 1
