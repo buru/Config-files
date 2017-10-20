@@ -139,6 +139,7 @@ Plugin 'vim-airline/vim-airline-themes'
 
 Plugin 'tpope/vim-fugitive'
 Plugin 'mileszs/ack.vim'
+Plugin 'junegunn/fzf'
 
 call vundle#end()
 filetype plugin indent on
@@ -151,7 +152,7 @@ filetype plugin indent on
 nnoremap <C-n> :cnext<CR>
 nnoremap <C-p> :cprev<CR>
 nnoremap <Leader>g :vimgrep /
-nnoremap <Leader>f :Ack
+nnoremap <Leader>f :Ack 
 " hide search highlighting
 map <Leader>h :set invhls <CR>
 
@@ -213,7 +214,12 @@ au BufRead,BufNewFile *.rabl setf ruby
 " ********************  plugins-related configuration ******************** 
 "
 " FuzzyFinder
-nmap ff :FufFile **/
+"nmap ff :FufFile **/
+" fzf
+nmap ff :FZF<CR>
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+let $FZF_CTRL_T_COMMAND = "$FZF_DEFAULT_COMMAND"
+let g:fzf_buffers_jump = 1
 " UtilSnippets
 let g:UltiSnipsExpandTrigger="<tab>"
 " Ack/Ag
