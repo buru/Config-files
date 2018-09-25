@@ -124,6 +124,10 @@ Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'rust-lang/rust.vim'
 
 Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rhubarb'
+Plugin 'mbbill/undotree'
 
 Plugin 'SirVer/ultisnips'
 
@@ -137,9 +141,9 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
-Plugin 'tpope/vim-fugitive'
 Plugin 'mileszs/ack.vim'
 Plugin 'junegunn/fzf'
+Plugin 'dkprice/vim-easygrep'
 
 call vundle#end()
 filetype plugin indent on
@@ -226,6 +230,7 @@ let g:UltiSnipsExpandTrigger="<tab>"
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+" let g:EasyGrepCommand="ag"
 
 " save file with root privileges
 cmap w!! %!sudo tee > /dev/null %
