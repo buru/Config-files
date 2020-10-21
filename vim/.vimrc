@@ -122,6 +122,7 @@ Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'mustache/vim-mustache-handlebars'
 
 Plugin 'rust-lang/rust.vim'
+Plugin 'rhysd/vim-crystal'
 
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-surround'
@@ -135,9 +136,12 @@ Plugin 'isRuslan/vim-es6'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'kchmck/vim-coffee-script'
 
+" themes
 Plugin 'flazz/vim-colorschemes'
 Plugin 'nightsense/carbonized'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'morhetz/gruvbox'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
@@ -243,14 +247,71 @@ au! BufWritePost _vimrc source %
 
 " UI-related (themes, colors etc)
 if has('gui_running')
-  colorscheme carbonized-dark
+  "colorscheme carbonized-dark
+  colorscheme gruvbox
 else
-  colorscheme Monokai
+  "colorscheme Monokai
+  colorscheme PaperColor
 endif
+"set background=light
+set background=dark
 set guioptions-=m "remove menu bar
 set guioptions-=T "remove toolbar
 let g:airline_powerline_fonts = 1
 if has('gui_running')
   "set guifont=Source\ Code\ Pro\ for\ Powerline
-  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 10
+  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 12
 endif
+
+" XML formatter (from Vim Tips Wiki). Requires xmllint
+function! DoFormatXML() range
+	" Save the file type
+	let l:origft = &ft
+
+	" Clean the file type
+	set ft=
+
+	" Add fake initial tag (so we can process multiple top-level elements)
+	exe ":let l:beforeFirstLine=" . a:firstline . "-1"
+	if l:beforeFirstLine < 0
+		let l:beforeFirstLine=0
+	endif
+	exe a:lastline . "put ='</PrettyXML>'"
+	exe l:beforeFirstLine . "put ='<PrettyXML>'"
+	exe ":let l:newLastLine=" . a:lastline . "+2"
+	if l:newLastLine > line('$')
+		let l:newLastLine=line('$')
+	endif
+  " Remove XML header
+	exe ":" . a:firstline . "," . a:lastline . "s/<\?xml\\_.*\?>\\_s*//e"
+
+	" Recalculate last line of the edited code
+	let l:newLastLine=search('</PrettyXML>')
+
+	" Execute external formatter
+	exe ":silent " . a:firstline . "," . l:newLastLine . "!xmllint --noblanks --format --recover -"
+
+	" Recalculate first and last lines of the edited code
+	let l:newFirstLine=search('<PrettyXML>')
+	let l:newLastLine=search('</PrettyXML>')
+	" Get inner range
+	let l:innerFirstLine=l:newFirstLine+1
+	let l:innerLastLine=l:newLastLine-1
+
+	" Remove extra unnecessary indentation
+	exe ":silent " . l:innerFirstLine . "," . l:innerLastLine "s/^  //e"
+
+	" Remove fake tag
+	exe l:newLastLine . "d"
+	exe l:newFirstLine . "d"
+
+	" Put the cursor at the first line of the edited code
+	exe ":" . l:newFirstLine
+
+	" Restore the file type
+	exe "set ft=" . l:origft
+endfunction
+command! -range=% FormatXML <line1>,<line2>call DoFormatXML()
+
+nmap <silent> <leader>x :%FormatXML<CR>
+vmap <silent> <leader>x :FormatXML<CR>
