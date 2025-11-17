@@ -30,6 +30,9 @@ set incsearch		" do incremental searching
 
 set number
 
+" automatically load changed files
+set autoread
+
 set noeol
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
@@ -109,13 +112,18 @@ nnoremap R "_d
 
 " plugins
 " Pathogen
-execute pathogen#infect()
+"execute pathogen#infect()
+
+" required for vim-coffee-script plugin to init properly
+filetype off
 
 " Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'preservim/nerdtree'
 
 Plugin 'JulesWang/css.vim'
 Plugin 'cakebaker/scss-syntax.vim'
@@ -136,6 +144,15 @@ Plugin 'isRuslan/vim-es6'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'kchmck/vim-coffee-script'
 
+Plugin 'imsnif/kdl.vim'
+
+" ES6, React
+Plugin 'pangloss/vim-javascript'
+Plugin 'maxmellon/vim-jsx-pretty'
+Plugin 'prettier/vim-prettier'
+" used for Eslint
+Plugin 'dense-analysis/ale'
+
 " themes
 Plugin 'flazz/vim-colorschemes'
 Plugin 'nightsense/carbonized'
@@ -149,7 +166,10 @@ Plugin 'mileszs/ack.vim'
 Plugin 'junegunn/fzf'
 Plugin 'dkprice/vim-easygrep'
 
+Plugin 'sotte/presenting.vim'
+
 call vundle#end()
+syntax enable
 filetype plugin indent on
 " :PluginList       - lists configured plugins
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
@@ -166,6 +186,9 @@ map <Leader>h :set invhls <CR>
 
 " show tab number for easy switching between tabs
 set showtabline=2 " always show tabs in gvim, but not vim
+
+let g:NERDTreeDirArrowExpandable = '-'
+let g:NERDTreeDirArrowCollapsible = '▾'
 
 " set up tab labels with tab number, buffer name, number of windows
 function! GuiTabLabel()
@@ -235,6 +258,8 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 " let g:EasyGrepCommand="ag"
+" Display ALE error information via Airline
+let g:airline#extensions#ale#enabled = 1
 
 " save file with root privileges
 cmap w!! %!sudo tee > /dev/null %
@@ -251,7 +276,8 @@ if has('gui_running')
   colorscheme gruvbox
 else
   "colorscheme Monokai
-  colorscheme PaperColor
+  "colorscheme PaperColor
+  colorscheme gruvbox
 endif
 "set background=light
 set background=dark
@@ -260,7 +286,9 @@ set guioptions-=T "remove toolbar
 let g:airline_powerline_fonts = 1
 if has('gui_running')
   "set guifont=Source\ Code\ Pro\ for\ Powerline
-  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 12
+  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 11
+  "set guifont=Mononoki\ Nerd\ Font\ Complete\ 11
+  "set guifont=Fira\ Mono\ 11
 endif
 
 " XML formatter (from Vim Tips Wiki). Requires xmllint
@@ -315,3 +343,5 @@ command! -range=% FormatXML <line1>,<line2>call DoFormatXML()
 
 nmap <silent> <leader>x :%FormatXML<CR>
 vmap <silent> <leader>x :FormatXML<CR>
+map <F1> <Esc>
+imap <F1> <Esc>
